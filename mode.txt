@@ -1,3 +1,6 @@
 tao  Database by sequelize: npx sequelize-cli db:migrate
 
 check seeder :npx sequelize-cli db:seed:all
+
+ CRUD : create ,read , update ,delete 
+ 
