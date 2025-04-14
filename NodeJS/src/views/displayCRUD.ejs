@@ -15,6 +15,8 @@ table,th,td {
 
     <table style="width:100%">
         <tr>
+       
+          <th>PassWord</th>
           <th>Email</th>
           <th>FirstName</th>
           <th>LastName</th>
@@ -29,6 +31,8 @@ table,th,td {
         <tr>
             <% for(let i=0; i < dataTable.length; i++) { %>
                 <tr>
+               
+                  <td><%= dataTable[i].password %></td>
                   <td><%= dataTable[i].email %></td>
                   <td><%= dataTable[i].firstName %></td>
                   <td><%= dataTable[i].lastName %></td>
@@ -39,12 +43,15 @@ table,th,td {
                   <td><%= dataTable[i].roleId %></td>
                   <td>
                     <a href="/edit-crud?id=<%= dataTable[i].id%>" class="btn-edit" type="button">Edit</a>
-                    <a href="" class="btn-delete" type="button">Delete</a>
+                    <a href="/delete-crud?id=<%= dataTable[i].id%>" class="btn-delete" type="button">Delete</a>
                   </td>
                 </tr>
              <% } %>
         </tr>
       </table>
+
+  
+
     
 </body>
 </html>

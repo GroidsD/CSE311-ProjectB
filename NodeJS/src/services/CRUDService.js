@@ -54,6 +54,19 @@ let getAllUser = () => {
     }
   });
 };
+
+let getAllProduct = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let products = await db.Product.findAll({
+        raw: true,
+      });
+      resolve(products);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 let getUserInforByID = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -92,9 +105,26 @@ let updateUserData = (data) => {
     }
   });
 };
+let deleteUserByID = (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { id: userId },
+      });
+      if (user) {
+        await user.destroy();
+      }
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createNewUse: createNewUser,
   getAllUser: getAllUser,
   getUserInforByID: getUserInforByID,
   updateUserData: updateUserData,
+  deleteUserByID: deleteUserByID,
+  getAllProduct: getAllProduct,
 };
