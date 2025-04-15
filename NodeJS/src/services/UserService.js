@@ -55,18 +55,6 @@ let getAllUser = () => {
   });
 };
 
-let getAllProduct = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let products = await db.Product.findAll({
-        raw: true,
-      });
-      resolve(products);
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
 let getUserInforByID = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -98,7 +86,10 @@ let updateUserData = (data) => {
         let allUser = await db.User.findAll();
         resolve(allUser);
       } else {
-        resolve();
+        resolve({
+          errCode: 1,
+          errMessage: " Cannot find user",
+        });
       }
     } catch (e) {
       reject(e);
@@ -108,23 +99,87 @@ let updateUserData = (data) => {
 let deleteUserByID = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
+      if (!userId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter: userId",
+        });
+        return;
+      }
+      console.log(userId);
+
       let user = await db.User.findOne({
         where: { id: userId },
       });
-      if (user) {
+
+      if (!user) {
+        resolve({
+          errCode: 2,
+          errMessage: "User not found",
+        });
+      } else {
         await user.destroy();
+        resolve({
+          errCode: 0,
+          errMessage: "User deleted successfully",
+        });
       }
-      resolve();
     } catch (e) {
       reject(e);
     }
   });
 };
+
+let getBillByUserID = (inputId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!inputId) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing required parameter!",
+        });
+      } else {
+        let user = await db.Bill.findOne({
+          where: { id: inputId },
+          attributes: { exclude: ["password", "image"] },
+          include: [
+            {
+              model: db.Bill,
+              as: "bills",
+              include: [
+                {
+                  model: db.Bill_Item,
+                  as: "bill_items",
+                  include: [
+                    {
+                      model: db.Product,
+                      as: "products",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          nest: true,
+        });
+        // console.log(user.bills[0].bill_item);
+
+        resolve({
+          errCode: 0,
+          data: user,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewUser: createNewUser,
   getAllUser: getAllUser,
   getUserInforByID: getUserInforByID,
   updateUserData: updateUserData,
   deleteUserByID: deleteUserByID,
-  getAllProduct: getAllProduct,
+  getBillByUserID: getBillByUserID,
 };

@@ -35,16 +35,6 @@ let displayGetCRUD = async (req, res) => {
   });
 };
 
-let displayProductsCRUD = async (req, res) => {
-  let data = await CRUDService.getAllProduct();
-  console.log("-----------------------'");
-  console.log(data);
-  console.log("-----------------------'");
-  return res.render("displayProduct.ejs", {
-    dataProducts: data,
-  });
-};
-
 let getEditCRUD = async (req, res) => {
   let userId = req.query.id;
   console.log(userId);
@@ -87,5 +77,4 @@ module.exports = {
   getEditCRUD: getEditCRUD,
   putCRUD: putCRUD,
   deleteCRUD: deleteCRUD,
-  displayProductsCRUD: displayProductsCRUD,
 };
