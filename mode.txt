@@ -14,5 +14,9 @@ check seeder :npx sequelize-cli db:seed:all
 
 
 
-
-  
+CORS: npm install -save cors@2.8.5
+CORS Error xảy ra khi trình duyệt ngăn chặn một yêu cầu 
+HTTP đến một nguồn (domain) khác với nguồn mà 
+trang web hiện tại đang chạy,
+ do vi phạm các quy tắc bảo mật của 
+ Cross-Origin Resource Sharing (CORS).

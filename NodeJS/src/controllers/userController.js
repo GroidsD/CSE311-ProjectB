@@ -5,7 +5,10 @@ let getAllUser = async (req, res) => {
   try {
     let data = await UserService.getAllUser();
     //console.log(data);
-    return res.status(200).json(data);
+    // return res.status(200).json(data);
+    return res.render("displayCRUD.ejs", {
+      dataTable: data,
+    });
   } catch (error) {
     return res.status(200).json({
       errCode: -1,
@@ -66,10 +69,36 @@ let getBillByUserID = async (req, res) => {
     });
   }
 };
+let handleLogin = async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  //console.log(email);
+
+  if (!email || !password) {
+    return res.status(500).json({
+      errorCode: 1,
+      message: "Missing inputs parameter!",
+    });
+  }
+  let userData = await UserService.handleLogin(email, password);
+  console.log(userData);
+
+  // return res.status(200).json(infor);
+  //check email exits
+  //compare password
+  //return userinfor
+  //access token:JWT
+  return res.status(200).json({
+    errCode: userData.errCode,
+    message: userData.errMessage,
+    user: userData.user ? userData.user : {},
+  });
+};
 module.exports = {
   getAllUser: getAllUser,
   createNewUser: createNewUser,
   deleteUserCRUD: deleteUserCRUD,
   updateUserCRUD: updateUserCRUD,
   getBillByUserID: getBillByUserID,
+  handleLogin: handleLogin,
 };

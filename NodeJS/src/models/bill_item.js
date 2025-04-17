@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
 
       Bill_Item.belongsTo(models.Bill, {
         foreignKey: "billId",
-        as: "bill_item",
+        targetKey: "billId",
+        as: "bills",
       });
       Bill_Item.belongsTo(models.Product, {
         foreignKey: "productId",

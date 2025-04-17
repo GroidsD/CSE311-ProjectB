@@ -5,6 +5,10 @@ import userController from "../controllers/userController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
+  router.post("/api/login", userController.handleLogin);
+  //router.get("/api/getAlluser", homeController.displayGetCRUD);
+  router.get("/crud", homeController.getCRUD);
+  router.post("/post-crud", homeController.postCRUD);
   //User
   router.get("/api/getAllUser", userController.getAllUser);
   router.post("/api/createNewUser", userController.createNewUser);
@@ -15,11 +19,14 @@ let initWebRoutes = (app) => {
   router.post("/api/createNewProduct", productController.createNewProduct);
   router.get("/api/deleteProductByID", productController.deleteProductByID);
   router.post("/api/updateProduct", productController.updateProduct);
-  //Bill User
+  //Bill User History
   router.get("/api/get-bill-by-user-id", userController.getBillByUserID); //history Cart
-  router.get("/api/get-product-by-bill-item", productController.getProductByBillItem); //detail bill
+  router.get(
+    "/api/get-product-by-bill-item",
+    productController.getProductByBillItem
+  ); //detail bill
   router.get("/api/get-bill-item-by-bill", productController.getBillItemByBill); //detail bill
-
+  //
   return app.use("/", router);
 };
 

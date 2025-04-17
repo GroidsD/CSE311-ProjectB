@@ -139,7 +139,7 @@ let getBillByUserID = (inputId) => {
           errMessage: "Missing required parameter!",
         });
       } else {
-        let user = await db.Bill.findOne({
+        let user = await db.User.findOne({
           where: { id: inputId },
           attributes: { exclude: ["password", "image"] },
           include: [
@@ -149,7 +149,7 @@ let getBillByUserID = (inputId) => {
               include: [
                 {
                   model: db.Bill_Item,
-                  as: "bill_items",
+                  as: "billItems",
                   include: [
                     {
                       model: db.Product,
@@ -174,6 +174,66 @@ let getBillByUserID = (inputId) => {
     }
   });
 };
+let handleLogin = (email, password) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let userData = {};
+      let isExist = await checkUserEmail(email);
+      if (isExist) {
+        //User Allready exist
+        let user = await db.User.findOne({
+          attributes: ["email", "roleId", "password"],
+          where: { email: email },
+          raw: true,
+          // attributes: {
+          //   include: ["email", "roleId"],
+          // },
+        });
+        if (user) {
+          //Compare PassWord
+          let check = await bcrypt.compareSync(password, user.password); //flase
+          if (check) {
+            userData.errCode = 0;
+            userData.errMessage = "Ok";
+            console.log(user);
+
+            delete user.password;
+            userData.user = user;
+          } else {
+            userData.errCode = 3;
+            userData.errMessage = "Wrong Password";
+          }
+        } else {
+          userData.errCode = 2;
+          userData.errMessage = "User not found";
+        }
+      } else {
+        //Return Error
+        userData.errCode = 1;
+        userData.errMessage = `Your email isn't exist in your system . Please try other email!`;
+      }
+      resolve(userData);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let checkUserEmail = (userEmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { email: userEmail },
+      });
+      if (user) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 module.exports = {
   createNewUser: createNewUser,
@@ -182,4 +242,5 @@ module.exports = {
   updateUserData: updateUserData,
   deleteUserByID: deleteUserByID,
   getBillByUserID: getBillByUserID,
+  handleLogin: handleLogin,
 };

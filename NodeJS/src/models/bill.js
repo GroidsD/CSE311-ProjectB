@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       Bill.belongsTo(models.User, { foreignKey: "userId", as: "user" });
       Bill.hasMany(models.Bill_Item, {
         foreignKey: "billId",
-        as: "bill_items",
+        sourceKey: "billId",
+        as: "billItems",
       });
     }
   }
   Bill.init(
     {
       billId: DataTypes.STRING,
-
       userId: DataTypes.STRING,
       totalPrice: DataTypes.DOUBLE,
       date: DataTypes.DATE,

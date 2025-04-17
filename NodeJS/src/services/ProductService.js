@@ -135,7 +135,7 @@ let getProductByBillItem = (productId) => {
           include: [
             {
               model: db.Product,
-              as: "products", // alias must match the association
+              as: "products",
             },
           ],
           nest: true,
@@ -154,23 +154,27 @@ let getProductByBillItem = (productId) => {
 let getBillItemByBill = (billId) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log(billId);
+
       if (!billId) {
         resolve({
           errCode: 1,
           errMessage: "Missing required parameter!",
         });
       } else {
-        let bill = await db.Bill.findOne({
+        let bill = await db.Bill.findAll({
           where: { billId: billId },
           include: [
             {
               model: db.Bill_Item,
-              as: "bill_items", // MUST match alias in Bill model
+              as: "billItems",
             },
           ],
+
           nest: true,
         });
 
+        // console.log(bill);
         resolve({
           errCode: 0,
           data: bill,
