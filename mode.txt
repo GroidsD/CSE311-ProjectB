@@ -14,32 +14,9 @@ check seeder :npx sequelize-cli db:seed:all
 
 
 
-
-  <!-- <table style="width:100%">
-        <tr>
-          <th>ProductId</th>
-          <th>ProductName</th>
-          <th>ProductPrice</th>
-          <th>Desciption</th>
-          <th>Size</th>
-          <th>Image</th>
-          <th>Quantity</th>
-          <th>CategoryType</th>
- 
-        </tr>
-        <tr>
-            <% for(let i=0; i < dataProducts.length; i++) { %>
-                <tr>
-                  <td><%= dataProducts[i].productId %></td>
-                  <td><%= dataProducts[i].productName %></td>
-                  <td><%= dataProducts[i].productPrice %></td>
-                  <td><%= dataProducts[i].descriptions %></td>
-                  <td><%= dataProducts[i].size %></td>
-                  <td><%= dataProducts[i].image %></td>
-                  <td><%= dataProducts[i].categoryType %></td>
- 
-              
-                </tr>
-             <% } %>
-        </tr> 
-      </table> -->
+CORS: npm install -save cors@2.8.5
+CORS Error xảy ra khi trình duyệt ngăn chặn một yêu cầu 
+HTTP đến một nguồn (domain) khác với nguồn mà 
+trang web hiện tại đang chạy,
+ do vi phạm các quy tắc bảo mật của 
+ Cross-Origin Resource Sharing (CORS).

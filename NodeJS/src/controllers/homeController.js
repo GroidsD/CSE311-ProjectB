@@ -20,7 +20,7 @@ let getCRUD = (req, res) => {
   return res.render("crud.ejs");
 };
 let postCRUD = async (req, res) => {
-  let message = await CRUDService.createNewUse(req.body);
+  let message = await CRUDService.createNewUser(req.body);
   console.log(message);
   return res.send("post CRUD from server");
 };
@@ -32,16 +32,6 @@ let displayGetCRUD = async (req, res) => {
   // console.log("-----------------------'");
   return res.render("displayCRUD.ejs", {
     dataTable: data,
-  });
-};
-
-let displayProductsCRUD = async (req, res) => {
-  let data = await CRUDService.getAllProduct();
-  console.log("-----------------------'");
-  console.log(data);
-  console.log("-----------------------'");
-  return res.render("displayProduct.ejs", {
-    dataProducts: data,
   });
 };
 
@@ -87,5 +77,4 @@ module.exports = {
   getEditCRUD: getEditCRUD,
   putCRUD: putCRUD,
   deleteCRUD: deleteCRUD,
-  displayProductsCRUD: displayProductsCRUD,
 };

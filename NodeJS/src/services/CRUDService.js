@@ -121,7 +121,7 @@ let deleteUserByID = (userId) => {
   });
 };
 module.exports = {
-  createNewUse: createNewUser,
+  createNewUser: createNewUser,
   getAllUser: getAllUser,
   getUserInforByID: getUserInforByID,
   updateUserData: updateUserData,
