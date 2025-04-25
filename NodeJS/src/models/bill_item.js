@@ -8,16 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      //   Bill_Item.belongsTo(models.Bill, { foreignKey: "billId", as: "bill" });
-      //   //   Bill_Item.belongsTo(models.Product, {
-      //   //     foreignKey: "productId",
-      //   //     as: "product",
-      //   //   });
-      //   Bill_Item.belongsTo(models.Product, {
-      //     foreignKey: "productId",
-      //     as: "product",
-      //   });
-
       Bill_Item.belongsTo(models.Bill, {
         foreignKey: "billId",
         targetKey: "billId",
@@ -33,8 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       billItemId: DataTypes.STRING,
       billId: DataTypes.STRING,
-      quanity: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
       productId: DataTypes.STRING,
+      discount: DataTypes.DOUBLE, // Discount cho từng sản phẩm
+      totalPrice: DataTypes.DOUBLE, // Giá trị sau giảm giá của sản phẩm
     },
     {
       sequelize,

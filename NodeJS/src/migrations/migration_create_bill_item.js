@@ -3,10 +3,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Bill_Items", {
-      // billItemId: DataTypes.STRING,
-      // billId: DataTypes.STRING,
-      // quanity: DataTypes.INTEGER,
-      // productID: DataTypes.STRING,
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,11 +15,17 @@ module.exports = {
       billId: {
         type: Sequelize.STRING,
       },
-      quanity: {
+      quantity: {
         type: Sequelize.INTEGER,
       },
       productId: {
         type: Sequelize.STRING,
+      },
+      discount: {
+        type: Sequelize.DOUBLE,
+      },
+      totalPrice: {
+        type: Sequelize.DOUBLE,
       },
       createdAt: {
         allowNull: true,

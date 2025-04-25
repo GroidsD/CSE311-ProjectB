@@ -2,31 +2,40 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import productController from "../controllers/productController";
 import userController from "../controllers/userController";
+import categoryController from "../controllers/categoryController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-  router.post("/api/login", userController.handleLogin);
   //router.get("/api/getAlluser", homeController.displayGetCRUD);
   router.get("/crud", homeController.getCRUD);
   router.post("/post-crud", homeController.postCRUD);
   //User
+  router.post("/api/login", userController.handleLogin);
   router.get("/api/getAllUser", userController.getAllUser);
   router.post("/api/createNewUser", userController.createNewUser);
   router.get("/api/deleteUser", userController.deleteUserCRUD);
   router.post("/api/updateUser", userController.updateUserCRUD);
+  //Bill User History
+  // router.get("/api/crud-bill", userController.getCRUDBill);
+  router.get("/api/get-bill-by-user-id", userController.getBillByUserID); //history Cart
+  router.post("/api/create-bill", userController.createBill);
+  router.post("/api/update-bill", userController.updateBill);
+  router.get("/api/delete-bill", userController.deleteBill);
   //Product
   router.get("/api/getAllProduct", productController.getAllProduct);
   router.post("/api/createNewProduct", productController.createNewProduct);
   router.get("/api/deleteProductByID", productController.deleteProductByID);
   router.post("/api/updateProduct", productController.updateProduct);
-  //Bill User History
-  router.get("/api/get-bill-by-user-id", userController.getBillByUserID); //history Cart
-  router.get(
-    "/api/get-product-by-bill-item",
-    productController.getProductByBillItem
-  ); //detail bill
-  router.get("/api/get-bill-item-by-bill", productController.getBillItemByBill); //detail bill
-  //
+  //Category
+  router.get("/api/getAllCategory", categoryController.getAllCategory);
+  router.post("/api/createNewCategory", categoryController.createNewCategory);
+  router.post("/api/updateCategory", categoryController.updateCategoryCRUD);
+
+  //WhistList
+  router.get("/api/get-wishlist", userController.getWishListByUserID); //wishlist
+  router.post("/api/create-wishlist", userController.createWishlist); //create and updateupdate
+  router.get("/api/delete-wishlist", userController.deleteWishlist);
+
   return app.use("/", router);
 };
 
