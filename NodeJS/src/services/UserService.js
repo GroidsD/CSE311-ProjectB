@@ -321,7 +321,6 @@ let deleteBill = async (billId) => {
   });
 };
 
-
 let handleLogin = (email, password) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -491,7 +490,7 @@ module.exports = {
   getBillByUserID: getBillByUserID,
   createBill: createBill,
   updateBill: updateBill,
+  deleteBill: deleteBill,
   getWishListByUserID: getWishListByUserID,
   createWishlist: createWishlist,
-  deleteBill:deleteBill
 };
